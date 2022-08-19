@@ -4,8 +4,11 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+
+import java.util.concurrent.Callable;
+
 @Command(name = "gendiff", version = "App 2.0", mixinStandardHelpOptions = true, description = "Compares two configuration files and shows a difference.")
-public class App implements Runnable {
+public class App implements Callable {
     @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
     boolean versionInfoRequested;
 
@@ -20,11 +23,21 @@ public class App implements Runnable {
 
     @Parameters(index = "1", paramLabel = "filepath2", description = "path to second file")
     private String filePath2;
-    @Override public void run() { System.out.println("Hello World!"); }
 
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
 
+    @Override
+    public Integer call() {
+        String diff;
+        try {
+            diff = Differ.generate(filePath1, filePath2);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(diff);
+        return 0;
+    }
 }
