@@ -7,13 +7,16 @@ import picocli.CommandLine.Parameters;
 
 import java.util.concurrent.Callable;
 
-@Command(name = "gendiff", version = "App 2.0", mixinStandardHelpOptions = true, description = "Compares two configuration files and shows a difference.")
+@Command(name = "gendiff",
+        version = "App 2.0",
+        mixinStandardHelpOptions = true,
+        description = "Compares two configuration files and shows a difference.")
 public class App implements Callable {
     @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
-    boolean versionInfoRequested;
+    private boolean versionInfoRequested;
 
     @Option(names = {"-h", "--help"}, usageHelp = true, description = "Show this help message and exit.")
-    boolean usageHelpRequested;
+    private boolean usageHelpRequested;
 
     @Option(names = {"-f", "--format"}, paramLabel = "format", description = "output format [default: stylish]")
     private String format = "stylish";
