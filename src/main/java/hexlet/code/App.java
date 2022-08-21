@@ -33,7 +33,7 @@ public class App implements Callable {
     }
 
     @Override
-    public Integer call() {
+    public final Integer call() {
         String diff;
         try {
             diff = Differ.generate(filePath1, filePath2);

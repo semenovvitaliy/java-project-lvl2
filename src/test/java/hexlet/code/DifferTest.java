@@ -26,7 +26,6 @@ class DifferTest {
                   + timeout: 20
                   + verbose: true
                 }""";
-
         assertEquals(actual, result);
     }
 }
