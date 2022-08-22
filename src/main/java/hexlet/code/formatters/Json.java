@@ -17,14 +17,14 @@ public class Json {
 
         for (String keyEntry : allKeysSet) {
             if (!map1.containsKey(keyEntry)) {
-                outMap.put("+ " + keyEntry, map2.get(keyEntry));
+                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry) : "null");
             } else if (!map2.containsKey(keyEntry)) {
-                outMap.put("- " + keyEntry, map1.get(keyEntry));
-            } else if (map1.get(keyEntry).equals(map2.get(keyEntry))) {
-                outMap.put("  " + keyEntry, map1.get(keyEntry));
+                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
+            } else if (EqualsEntryMap.isEquals(map1.get(keyEntry),map2.get(keyEntry))) {
+                outMap.put("  " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
             } else {
-                outMap.put("- " + keyEntry, map1.get(keyEntry));
-                outMap.put("+ " + keyEntry, map2.get(keyEntry));
+                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
+                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry) : "null");
             }
         }
 

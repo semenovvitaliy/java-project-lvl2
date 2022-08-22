@@ -22,7 +22,7 @@ public class Plain {
                         .append(keyEntry)
                         .append("' was removed")
                         .append("\n");
-            } else if (equalsEntryMap(map1.get(keyEntry), map2.get(keyEntry))) {
+            } else if (EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was not changed. Value: ")
@@ -39,13 +39,5 @@ public class Plain {
             }
         }
         return resultString.toString();
-    }
-    private static boolean equalsEntryMap(Object entry1, Object entry2) {
-        if ((entry1 != null) && (entry2 != null)) {
-            return entry1.equals(entry2);
-        } else {
-            return (entry1 == null) && (entry2 == null);
-        }
-
     }
 }

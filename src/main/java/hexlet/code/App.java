@@ -36,7 +36,7 @@ public class App implements Callable {
     public final Integer call() {
         String diff;
         try {
-            diff = Differ.generate(filePath1, filePath2);
+            diff = Differ.generate(filePath1, filePath2, format);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
