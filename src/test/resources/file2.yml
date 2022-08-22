@@ -1,0 +1,8 @@
+checked: true
+default: [11, 22, 33]
+id: null
+key2: 'value2'
+numbers2: [4, 5, 6]
+setting1: 'Another value'
+setting2: 300
+setting3: 'none'

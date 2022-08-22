@@ -7,13 +7,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DifferTest {
 
     @Test
-    void generateTest() {
+    void generateJsonTest() {
         String path1 = "src/test/resources/file1.json";
         String path2 = "src/test/resources/file2.json";
         String result;
 
         try {
-            result = Differ.generate(path1, path2);
+            result = Differ.generate(path1, path2, "json");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -26,6 +26,31 @@ class DifferTest {
                   + timeout: 20
                   + verbose: true
                 }""";
+        assertEquals(actual, result);
+    }
+    @Test
+    void generateYmlTest() {
+        String path1 = "src/test/resources/file1.yml";
+        String path2 = "src/test/resources/file2.yml";
+        String result;
+
+        try {
+            result = Differ.generate(path1, path2, "plain");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(result);
+        String actual = """
+                Property 'checked' was updated. From false to true
+                Property 'default' was updated. From null to [11, 22, 33]
+                Property 'id' was updated. From 45 to null
+                Property 'key1' was removed
+                Property 'key2' was added with value: value2
+                Property 'numbers2' was updated. From [1, 2, 3] to [4, 5, 6]
+                Property 'setting1' was updated. From Some value to Another value
+                Property 'setting2' was updated. From 200 to 300
+                Property 'setting3' was updated. From true to none
+                """;
         assertEquals(actual, result);
     }
 }

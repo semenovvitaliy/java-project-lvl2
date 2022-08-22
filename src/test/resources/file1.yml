@@ -1,0 +1,8 @@
+checked: false
+default: null
+id: 45
+key1: 12345
+numbers2: [1, 2, 3]
+setting1: 'Some value'
+setting2: 200
+setting3: true
