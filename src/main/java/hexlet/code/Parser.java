@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static java.nio.file.Files.readString;
@@ -21,7 +22,7 @@ public class Parser {
         } else if (filePath.endsWith(".yml")) {
             return getYmlParse(s);
         }
-        return null;
+        return new LinkedHashMap<>();
     }
 
     private static Map<String, Object> getJsonParse(String s) throws JsonProcessingException {

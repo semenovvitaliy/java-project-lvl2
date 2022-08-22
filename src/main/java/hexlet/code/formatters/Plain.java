@@ -23,12 +23,13 @@ public class Plain {
                         .append("' was removed")
                         .append("\n");
             } else if (equalsEntryMap(map1.get(keyEntry), map2.get(keyEntry))) {
-                    resultString.append("Property '")
-                            .append(keyEntry)
-                            .append("' was not changed. Value: ")
-                            .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
-                            .append("\n");
-                } else resultString.append("Property '")
+                resultString.append("Property '")
+                        .append(keyEntry)
+                        .append("' was not changed. Value: ")
+                        .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
+                        .append("\n");
+            } else  {
+                resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was updated. From ")
                         .append(map1.get(keyEntry) != null ? map1.get(keyEntry) : "null")
@@ -36,12 +37,15 @@ public class Plain {
                         .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
                         .append("\n");
             }
+        }
         return resultString.toString();
     }
     private static boolean equalsEntryMap(Object entry1, Object entry2) {
         if ((entry1 != null) && (entry2 != null)) {
             return entry1.equals(entry2);
-        } else return (entry1 == null) && (entry2 == null);
+        } else {
+            return (entry1 == null) && (entry2 == null);
+        }
 
     }
 }
