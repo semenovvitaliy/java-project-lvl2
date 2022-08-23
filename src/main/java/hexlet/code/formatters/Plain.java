@@ -15,7 +15,7 @@ public class Plain {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was added with value: ")
-                        .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
+                        .append(getValue(map2, keyEntry))
                         .append("\n");
             } else if (!map2.containsKey(keyEntry)) {
                 resultString.append("Property '")
@@ -26,18 +26,31 @@ public class Plain {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was not changed. Value: ")
-                        .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
+                        .append(getValue(map2, keyEntry))
                         .append("\n");
             } else  {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was updated. From ")
-                        .append(map1.get(keyEntry) != null ? map1.get(keyEntry) : "null")
+                        .append(getValue(map1, keyEntry))
                         .append(" to ")
-                        .append(map2.get(keyEntry) != null ? map2.get(keyEntry) : "null")
+                        .append(getValue(map2, keyEntry))
                         .append("\n");
             }
         }
         return resultString.toString();
+    }
+
+    private static Object getValue(Map<String, Object> map, String key) {
+        Object tempValue = map.get(key);
+        if (tempValue == null) {
+            return "null";
+        }
+        if ((tempValue instanceof String)
+                || (tempValue instanceof Integer)
+                || (tempValue instanceof Boolean)) {
+            return tempValue;
+        }
+        return "[complex value]";
     }
 }
