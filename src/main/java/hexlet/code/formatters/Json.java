@@ -2,7 +2,6 @@ package hexlet.code.formatters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,10 +28,7 @@ public class Json {
         }
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper.writeValueAsString(outMap)
-                .replaceAll("\"", "")
-                .replaceAll(" :", ":")
-                .replaceAll(",\n", "\n");
+        //mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        return mapper.writeValueAsString(outMap);
     }
 }
