@@ -2,6 +2,7 @@ package hexlet.code;
 
 import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
+import hexlet.code.formatters.Stylish;
 
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class Differ {
                 return Plain.getInPlain(map1, map2);
             }
             default -> {
-                return Json.getInJson(map1, map2);
+                return Stylish.getInStylish(map1, map2);
             }
         }
     }
