@@ -79,13 +79,13 @@ class AppTest {
     }
 
     @Test
-    void generateJsonToRecursionStylishTest() {
+    void generateJsonToRecursionStylishDefaultTest() {
         String path1 = "src/test/resources/file3.json";
         String path2 = "src/test/resources/file4.json";
         String result;
 
         try {
-            result = Differ.generate(path1, path2, "stylish");
+            result = Differ.generate(path1, path2);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
