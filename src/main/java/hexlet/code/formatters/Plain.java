@@ -22,13 +22,7 @@ public class Plain {
                         .append(keyEntry)
                         .append("' was removed")
                         .append("\n");
-            } else if (EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
-                resultString.append("Property '")
-                        .append(keyEntry)
-                        .append("' was not changed. Value: ")
-                        .append(getValue(map2, keyEntry))
-                        .append("\n");
-            } else  {
+            } else if (!EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was updated. From ")
@@ -46,10 +40,11 @@ public class Plain {
         if (tempValue == null) {
             return "null";
         }
-        if ((tempValue instanceof String)
-                || (tempValue instanceof Integer)
-                || (tempValue instanceof Boolean)) {
+        if ((tempValue instanceof Integer) || (tempValue instanceof Boolean)) {
             return tempValue;
+        }
+        if (tempValue instanceof String) {
+            return "'%s'".formatted(tempValue);
         }
         return "[complex value]";
     }

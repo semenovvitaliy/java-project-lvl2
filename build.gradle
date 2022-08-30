@@ -2,6 +2,7 @@ plugins {
     id 'application'
     id 'checkstyle'
     id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.2.0'
 }
 
 group 'hexlet.code'
@@ -13,7 +14,7 @@ application {
 
 compileJava {
     options.release = 17
-    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+    /*options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]*/
 }
 
 repositories {
@@ -42,7 +43,7 @@ tasks.register('applicationCodeCoverageReport', JacocoReport) {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
-    jacoco {
+    /*jacoco {
         destinationFile = layout.buildDirectory.file('jacoco/jacocoTest.exec').get().asFile
         classDumpDir = layout.buildDirectory.dir('jacoco/classpathdumps').get().asFile
         enabled = true
@@ -56,18 +57,20 @@ test {
         address = "localhost"
         port = 6300
         jmx = false
-    }
+    }*/
 }
 jacocoTestReport {
     dependsOn test
-    reports {
+    /*reports {
         xml.required = true
-        csv.required = false
+        /*csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }
+    }*/
 }
-
-jacocoTestCoverageVerification {
+testlogger {
+    showStandardStreams true
+}
+/*jacocoTestCoverageVerification {
     violationRules {
         rule {
             limit {
@@ -87,4 +90,4 @@ jacocoTestCoverageVerification {
             }
         }
     }
-}
+}*/
