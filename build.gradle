@@ -61,33 +61,12 @@ test {
 }
 jacocoTestReport {
     dependsOn test
-    /*reports {
+    reports {
         xml.required = true
-        /*csv.required = false
+        csv.required = false
         html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-    }*/
+    }
 }
 testlogger {
     showStandardStreams true
 }
-/*jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.5
-            }
-        }
-
-        rule {
-            enabled = false
-            element = 'CLASS'
-            includes = ['org.gradle.*']
-
-            limit {
-                counter = 'LINE'
-                value = 'TOTALCOUNT'
-                maximum = 0.3
-            }
-        }
-    }
-}*/
