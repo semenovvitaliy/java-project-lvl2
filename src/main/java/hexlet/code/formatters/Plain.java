@@ -10,18 +10,20 @@ public class Plain {
 
         StringBuilder resultString = new StringBuilder();
 
+        int i = 1;
+        int size = allKeysSet.size();
         for (String keyEntry : allKeysSet) {
             if (!map1.containsKey(keyEntry)) {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was added with value: ")
                         .append(getValue(map2, keyEntry))
-                        .append("\n");
+                        .append(i != size ? "\n" : "");
             } else if (!map2.containsKey(keyEntry)) {
                 resultString.append("Property '")
                         .append(keyEntry)
                         .append("' was removed")
-                        .append("\n");
+                        .append(i != size ? "\n" : "");
             } else if (!EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
                 resultString.append("Property '")
                         .append(keyEntry)
@@ -29,8 +31,9 @@ public class Plain {
                         .append(getValue(map1, keyEntry))
                         .append(" to ")
                         .append(getValue(map2, keyEntry))
-                        .append("\n");
+                        .append(i != size ? "\n" : "");
             }
+            i++;
         }
         return resultString.toString();
     }
