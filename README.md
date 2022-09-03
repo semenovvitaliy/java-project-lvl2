@@ -1,3 +1,7 @@
+## Difference Calculator
+Application for compare two files and show a difference.
+Usable formats: json и yml.
+Conclusion may be in tree various presentations (watch help). 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/semenovvitaliy/java-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/semenovvitaliy/java-project-lvl2/actions)
 [![Java CI](https://github.com/semenovvitaliy/java-project-lvl2/actions/workflows/main.yml/badge.svg)](https://github.com/semenovvitaliy/java-project-lvl2/actions/workflows/main.yml)
