@@ -43,6 +43,9 @@ class AppTest {
         String resultPathByString = "src/test/resources/result12_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
         String extendedString = readString(resultPath);
+        if (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
 
         String path1 = "src/test/resources/file1.json";
         String path2 = "src/test/resources/file2.json";
@@ -57,6 +60,9 @@ class AppTest {
         String resultPathByString = "src/test/resources/result34_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
         String extendedString = readString(resultPath);
+        if (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
 
         String path1 = "src/test/resources/file3.json";
         String path2 = "src/test/resources/file4.json";

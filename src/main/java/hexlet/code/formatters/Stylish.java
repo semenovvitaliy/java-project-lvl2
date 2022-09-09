@@ -44,7 +44,7 @@ public class Stylish {
                 default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
             }
         }
-        str.append("}\n");
+        str.append("}");
         return str.toString();
     }
 }
