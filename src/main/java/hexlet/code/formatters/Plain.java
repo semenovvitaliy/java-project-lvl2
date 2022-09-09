@@ -1,53 +1,51 @@
 package hexlet.code.formatters;
 
-import java.util.Map;
-import java.util.TreeSet;
+import hexlet.code.ComparedEntry;
+import hexlet.code.DiffBuilder;
 
 public class Plain {
-    public static String getInPlain(Map<String, Object> map1, Map<String, Object> map2) {
-        TreeSet<String> allKeysSet = new TreeSet<>(map1.keySet());
-        allKeysSet.addAll(map2.keySet());
-
+    public static String getInPlain(DiffBuilder diffBuilder) {
         StringBuilder resultString = new StringBuilder();
 
         int i = 1;
-        int size = allKeysSet.size();
-        for (String keyEntry : allKeysSet) {
-            if (!map1.containsKey(keyEntry)) {
-                resultString.append("Property '")
-                        .append(keyEntry)
+        int size = diffBuilder.getSize();
+        for (ComparedEntry each : diffBuilder.getList()) {
+            switch (each.getAction()) {
+                case ADDED -> resultString.append("Property '")
+                        .append(each.getKey())
                         .append("' was added with value: ")
-                        .append(getValue(map2, keyEntry))
+                        .append(toPlainValue(each.getValue()))
                         .append(i != size ? "\n" : "");
-            } else if (!map2.containsKey(keyEntry)) {
-                resultString.append("Property '")
-                        .append(keyEntry)
+                case REMOVED -> resultString.append("Property '")
+                        .append(each.getKey())
                         .append("' was removed")
                         .append(i != size ? "\n" : "");
-            } else if (!EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
-                resultString.append("Property '")
-                        .append(keyEntry)
+                case CHANGED -> resultString.append("Property '")
+                        .append(each.getKey())
                         .append("' was updated. From ")
-                        .append(getValue(map1, keyEntry))
+                        .append(toPlainValue(each.getLastValue()))
                         .append(" to ")
-                        .append(getValue(map2, keyEntry))
+                        .append(toPlainValue(each.getValue()))
                         .append(i != size ? "\n" : "");
+                case NOTCHANGED -> {
+                    continue;
+                }
+                default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
             }
             i++;
         }
         return resultString.toString();
     }
 
-    private static Object getValue(Map<String, Object> map, String key) {
-        Object tempValue = map.get(key);
-        if (tempValue == null) {
+    private static Object toPlainValue(Object value) {
+        if (value == null) {
             return "null";
         }
-        if ((tempValue instanceof Integer) || (tempValue instanceof Boolean)) {
-            return tempValue;
+        if ((value instanceof Integer) || (value instanceof Boolean)) {
+            return value;
         }
-        if (tempValue instanceof String) {
-            return "'%s'".formatted(tempValue);
+        if (value instanceof String) {
+            return "'%s'".formatted(value);
         }
         return "[complex value]";
     }

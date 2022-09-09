@@ -5,32 +5,16 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static java.nio.file.Files.readString;
-
 public class Parser {
-    public static Map<String, Object> getParserFile(String filePath) throws IOException {
-        Path fullPath = Paths.get(filePath).toAbsolutePath().normalize();
-        String s = readString(fullPath);
-        if (filePath.endsWith(".json")) {
-            return getJsonParse(s);
-        } else if (filePath.endsWith(".yml")) {
-            return getYmlParse(s);
-        }
-        return new LinkedHashMap<>();
-    }
 
-    private static Map<String, Object> getJsonParse(String s) throws JsonProcessingException {
+    public static Map<String, Object> parseJsonString(String s) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(s, new TypeReference<>() { });
     }
 
-    private static Map<String, Object> getYmlParse(String s) throws JsonProcessingException {
+    public static Map<String, Object> parseYmlString(String s) throws JsonProcessingException {
         ObjectMapper mapper = new YAMLMapper();
         return mapper.readValue(s, new TypeReference<>() { });
     }

@@ -1,28 +1,42 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Json;
-import hexlet.code.formatters.Plain;
-import hexlet.code.formatters.Stylish;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
+
+import static hexlet.code.Formatter.formatter;
+import static java.nio.file.Files.readString;
 
 public class Differ {
 
     public static String generate(String filePath1, String filePath2, String formatType) throws Exception {
-        final Map<String, Object> map1 = Parser.getParserFile(filePath1);
-        final Map<String, Object> map2 = Parser.getParserFile(filePath2);
+        Path fullPath1 = Paths.get(filePath1).toAbsolutePath().normalize();
+        String s1 = readString(fullPath1);
 
-        switch (formatType) {
-            case "json" -> {
-                return Json.getInJson(map1, map2);
-            }
-            case "plain" -> {
-                return Plain.getInPlain(map1, map2);
-            }
-            default -> {
-                return Stylish.getInStylish(map1, map2);
-            }
+        Map<String, Object> map1;
+        if (filePath1.endsWith(".json")) {
+            map1 = Parser.parseJsonString(s1);
+        } else if (filePath1.endsWith(".yml")) {
+            map1 = Parser.parseYmlString(s1);
+        } else {
+            throw new Exception("Wrong file1 format");
         }
+
+        Path fullPath2 = Paths.get(filePath2).toAbsolutePath().normalize();
+        String s2 = readString(fullPath2);
+
+        Map<String, Object> map2;
+        if (filePath2.endsWith(".json")) {
+            map2 = Parser.parseJsonString(s2);
+        } else if (filePath2.endsWith(".yml")) {
+            map2 = Parser.parseYmlString(s2);
+        } else {
+            throw new Exception("Wrong file2 format");
+        }
+
+        DiffBuilder builtDiff = new DiffBuilder(map1, map2);
+
+        return formatter(builtDiff, formatType);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {

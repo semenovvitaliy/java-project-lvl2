@@ -1,37 +1,50 @@
 package hexlet.code.formatters;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.TreeSet;
+import hexlet.code.ComparedEntry;
+import hexlet.code.DiffBuilder;
 
 public class Stylish {
-    public static String getInStylish(Map<String, Object> map1, Map<String, Object> map2) throws Exception {
-        TreeSet<String> allKeysSet = new TreeSet<>(map1.keySet());
-        allKeysSet.addAll(map2.keySet());
+    public static String getInStylish(DiffBuilder diffBuilder) {
+        StringBuilder str = new StringBuilder("{");
 
-        Map<String, Object> outMap = new LinkedHashMap<>();
-
-        for (String keyEntry : allKeysSet) {
-            if (!map1.containsKey(keyEntry)) {
-                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry).toString() : "null");
-            } else if (!map2.containsKey(keyEntry)) {
-                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry).toString() : "null");
-            } else if (EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
-                outMap.put("  " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry).toString() : "null");
-            } else {
-                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry).toString() : "null");
-                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry).toString() : "null");
-            }
+        int size = diffBuilder.getSize();
+        if (size > 0) {
+            str.append("\n");
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper.writeValueAsString(outMap)
-                .replaceAll("\"", "")
-                .replaceAll(" :", ":")
-                .replaceAll(",\n", "\n");
+        for (ComparedEntry each : diffBuilder.getList()) {
+            switch (each.getAction()) {
+                case ADDED -> str.append("  + ")
+                    .append(each.getKey())
+                    .append(": ")
+                    .append(each.getValue())
+                    .append("\n");
+                case REMOVED -> str.append("  - ")
+                    .append(each.getKey())
+                    .append(": ")
+                    .append(each.getLastValue())
+                    .append("\n");
+                case NOTCHANGED -> str.append("    ")
+                        .append(each.getKey())
+                        .append(": ")
+                        .append(each.getValue())
+                        .append("\n");
+                case CHANGED -> {
+                    str.append("  - ")
+                            .append(each.getKey())
+                            .append(": ")
+                            .append(each.getLastValue())
+                            .append("\n");
+                    str.append("  + ")
+                            .append(each.getKey())
+                            .append(": ")
+                            .append(each.getValue())
+                            .append("\n");
+                }
+                default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
+            }
+        }
+        str.append("}\n");
+        return str.toString();
     }
 }

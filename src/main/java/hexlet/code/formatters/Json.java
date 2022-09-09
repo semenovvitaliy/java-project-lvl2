@@ -1,34 +1,31 @@
 package hexlet.code.formatters;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.ComparedEntry;
+import hexlet.code.DiffBuilder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.TreeSet;
 
 public class Json {
-    public static String getInJson(Map<String, Object> map1, Map<String, Object> map2) throws JsonProcessingException {
-        TreeSet<String> allKeysSet = new TreeSet<>(map1.keySet());
-        allKeysSet.addAll(map2.keySet());
-
+    public static String getInJson(DiffBuilder diffBuilder) throws Exception {
         Map<String, Object> outMap = new LinkedHashMap<>();
 
-        for (String keyEntry : allKeysSet) {
-            if (!map1.containsKey(keyEntry)) {
-                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry) : "null");
-            } else if (!map2.containsKey(keyEntry)) {
-                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
-            } else if (EqualsEntryMap.isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
-                outMap.put("  " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
-            } else {
-                outMap.put("- " + keyEntry, map1.get(keyEntry) != null ? map1.get(keyEntry) : "null");
-                outMap.put("+ " + keyEntry, map2.get(keyEntry) != null ? map2.get(keyEntry) : "null");
+        for (ComparedEntry each : diffBuilder.getList()) {
+            switch (each.getAction()) {
+                case ADDED -> outMap.put("+ " + each.getKey(), each.getValue());
+                case REMOVED -> outMap.put("- " + each.getKey(), each.getLastValue());
+                case NOTCHANGED -> outMap.put("  " + each.getKey(), each.getValue());
+                case CHANGED -> {
+                    outMap.put("- " + each.getKey(), each.getLastValue());
+                    outMap.put("+ " + each.getKey(), each.getValue());
+                }
+                default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
             }
         }
 
         ObjectMapper mapper = new ObjectMapper();
         //mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        return mapper.writeValueAsString(outMap);
+        return mapper.writeValueAsString(outMap) + "\n";
     }
 }
