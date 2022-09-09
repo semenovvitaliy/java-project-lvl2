@@ -1,32 +1,32 @@
 package hexlet.code;
 
 public final class ComparedEntry {
-    private final String key;
-    private final Object lastValue;
-    private final Object value;
-    private final KeyAction action;
+    private final String thisKey;
+    private final Object thisLastValue;
+    private final Object thisValue;
+    private final KeyAction thisAction;
 
     public ComparedEntry(String key, Object lastValue, Object value, KeyAction action) {
-        this.key = key;
-        this.lastValue = lastValue;
-        this.value = value;
-        this.action = action;
+        thisKey = key;
+        thisLastValue = lastValue;
+        thisValue = value;
+        thisAction = action;
     }
 
     public String getKey() {
-        return key;
+        return thisKey;
     }
 
     public Object getLastValue() {
-        return lastValue;
+        return thisLastValue;
     }
 
     public Object getValue() {
-        return value;
+        return thisValue;
     }
 
     public KeyAction getAction() {
-        return action;
+        return thisAction;
     }
 }
 
