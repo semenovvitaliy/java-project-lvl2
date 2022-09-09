@@ -25,23 +25,6 @@ class AppTest {
     }
 
     @Test
-    void generateYmlToPlainTest() throws Exception {
-        String resultPathByString = "src/test/resources/result12_yml_plain.txt";
-        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
-
-        String path1 = "src/test/resources/file1.yml";
-        String path2 = "src/test/resources/file2.yml";
-
-        String result = Differ.generate(path1, path2, "plain");
-
-        assertEquals(extendedString, result);
-    }
-
-    @Test
     void generateJsonToStylishTest() throws Exception {
         String resultPathByString = "src/test/resources/result12_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
@@ -71,6 +54,88 @@ class AppTest {
         String path2 = "src/test/resources/file4.json";
 
         String result = Differ.generate(path1, path2);
+
+        assertEquals(extendedString, result);
+    }
+
+    @Test
+    void generateJsonToPlainTest() throws Exception {
+        String resultPathByString = "src/test/resources/result34_json_plain.txt";
+        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
+        String extendedString = readString(resultPath);
+        while (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
+
+        String path1 = "src/test/resources/file3.json";
+        String path2 = "src/test/resources/file4.json";
+
+        String result = Differ.generate(path1, path2, "plain");
+
+        assertEquals(extendedString, result);
+    }
+
+    @Test
+    void generateYmlToPlainTest() throws Exception {
+        String resultPathByString = "src/test/resources/result12_yml_plain.txt";
+        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
+        String extendedString = readString(resultPath);
+        while (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
+
+        String path1 = "src/test/resources/file1.yml";
+        String path2 = "src/test/resources/file2.yml";
+
+        String result = Differ.generate(path1, path2, "plain");
+
+        assertEquals(extendedString, result);
+    }
+
+    @Test
+    void generateYmlToStylishTest() throws Exception {
+        String resultPathByString = "src/test/resources/result12_yml_stylish.txt";
+        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
+        String extendedString = readString(resultPath);
+        while (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
+
+        String path1 = "src/test/resources/file1.yml";
+        String path2 = "src/test/resources/file2.yml";
+
+        String result = Differ.generate(path1, path2, "stylish");
+
+        assertEquals(extendedString, result);
+    }
+
+    @Test
+    void generateYmlToStylishDefaultTest() throws Exception {
+        String resultPathByString = "src/test/resources/result12_yml_stylish.txt";
+        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
+        String extendedString = readString(resultPath);
+        while (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
+
+        String path1 = "src/test/resources/file1.yml";
+        String path2 = "src/test/resources/file2.yml";
+
+        String result = Differ.generate(path1, path2);
+
+        assertEquals(extendedString, result);
+    }
+
+    @Test
+    void generateYmlToJsonTest() throws Exception {
+        String resultPathByString = "src/test/resources/result12_yml_json.txt";
+        Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
+        String extendedString = readString(resultPath);
+
+        String path1 = "src/test/resources/file1.yml";
+        String path2 = "src/test/resources/file2.yml";
+
+        String result = Differ.generate(path1, path2, "json");
 
         assertEquals(extendedString, result);
     }
