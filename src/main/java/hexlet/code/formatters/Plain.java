@@ -7,32 +7,35 @@ public class Plain {
     public static String getInPlain(DiffBuilder diffBuilder) {
         StringBuilder resultString = new StringBuilder();
 
-        int i = 1;
+        boolean firstLine = true;
         int size = diffBuilder.getSize();
         for (ComparedEntry each : diffBuilder.getList()) {
             switch (each.getAction()) {
-                case ADDED -> resultString.append("Property '")
+                case ADDED -> resultString
+                        .append(firstLine ? "" : "\n")
+                        .append("Property '")
                         .append(each.getKey())
                         .append("' was added with value: ")
-                        .append(toPlainValue(each.getValue()))
-                        .append(i != size ? "\n" : "");
-                case REMOVED -> resultString.append("Property '")
+                        .append(toPlainValue(each.getValue()));
+                case REMOVED -> resultString
+                        .append(firstLine ? "" : "\n")
+                        .append("Property '")
                         .append(each.getKey())
-                        .append("' was removed")
-                        .append(i != size ? "\n" : "");
-                case CHANGED -> resultString.append("Property '")
+                        .append("' was removed");
+                case CHANGED -> resultString
+                        .append(firstLine ? "" : "\n")
+                        .append("Property '")
                         .append(each.getKey())
                         .append("' was updated. From ")
                         .append(toPlainValue(each.getLastValue()))
                         .append(" to ")
-                        .append(toPlainValue(each.getValue()))
-                        .append(i != size ? "\n" : "");
+                        .append(toPlainValue(each.getValue()));
                 case NOTCHANGED -> {
                     continue;
                 }
                 default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
             }
-            i++;
+            firstLine = false;
         }
         return resultString.toString();
     }

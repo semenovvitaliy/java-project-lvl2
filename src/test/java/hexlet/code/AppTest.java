@@ -29,6 +29,9 @@ class AppTest {
         String resultPathByString = "src/test/resources/result12_yml_plain.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
         String extendedString = readString(resultPath);
+        while (extendedString.endsWith("\n")) {
+            extendedString = extendedString.substring(0, extendedString.length() - 1);
+        }
 
         String path1 = "src/test/resources/file1.yml";
         String path2 = "src/test/resources/file2.yml";
@@ -43,7 +46,7 @@ class AppTest {
         String resultPathByString = "src/test/resources/result12_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
         String extendedString = readString(resultPath);
-        if (extendedString.endsWith("\n")) {
+        while (extendedString.endsWith("\n")) {
             extendedString = extendedString.substring(0, extendedString.length() - 1);
         }
 
@@ -60,7 +63,7 @@ class AppTest {
         String resultPathByString = "src/test/resources/result34_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
         String extendedString = readString(resultPath);
-        if (extendedString.endsWith("\n")) {
+        while (extendedString.endsWith("\n")) {
             extendedString = extendedString.substring(0, extendedString.length() - 1);
         }
 
