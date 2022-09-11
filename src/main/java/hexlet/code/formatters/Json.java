@@ -2,25 +2,24 @@ package hexlet.code.formatters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import hexlet.code.ComparedEntry;
-import hexlet.code.DiffBuilder;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Json {
-    public static String getInJson(DiffBuilder diffBuilder) throws Exception {
+    public static String format(Map<String, ComparedEntry> diffBuilder) throws Exception {
         Map<String, Object> outMap = new LinkedHashMap<>();
 
-        for (ComparedEntry each : diffBuilder.getList()) {
-            switch (each.getAction()) {
-                case ADDED -> outMap.put("+ " + each.getKey(), each.getValue());
-                case REMOVED -> outMap.put("- " + each.getKey(), each.getLastValue());
-                case NOTCHANGED -> outMap.put("  " + each.getKey(), each.getValue());
+        for (Map.Entry<String, ComparedEntry> each : diffBuilder.entrySet()) {
+            switch (each.getValue().getAction()) {
+                case ADDED -> outMap.put("+ " + each.getKey(), each.getValue().getValue());
+                case REMOVED -> outMap.put("- " + each.getKey(), each.getValue().getLastValue());
+                case NOTCHANGED -> outMap.put("  " + each.getKey(), each.getValue().getValue());
                 case CHANGED -> {
-                    outMap.put("- " + each.getKey(), each.getLastValue());
-                    outMap.put("+ " + each.getKey(), each.getValue());
+                    outMap.put("- " + each.getKey(), each.getValue().getLastValue());
+                    outMap.put("+ " + each.getKey(), each.getValue().getValue());
                 }
-                default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
+                default -> throw new IllegalStateException("Unexpected action: " + each.getValue().getAction());
             }
         }
 

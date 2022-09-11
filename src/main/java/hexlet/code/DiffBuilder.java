@@ -1,42 +1,29 @@
 package hexlet.code;
 
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
 public class DiffBuilder {
 
-    private LinkedList<ComparedEntry> listEntry = new LinkedList<>();
-    private final int size;
-
-    public DiffBuilder(Map<String, Object> map1, Map<String, Object> map2) {
+    public static Map<String, ComparedEntry> getDiff(Map<String, Object> map1, Map<String, Object> map2) {
         TreeSet<String> allKeysSet = new TreeSet<>(map1.keySet());
         allKeysSet.addAll(map2.keySet());
 
+        Map<String, ComparedEntry> outMap = new LinkedHashMap<>();
+
         for (String keyEntry : allKeysSet) {
             if (!map1.containsKey(keyEntry)) {
-                this.listEntry.add(new ComparedEntry(keyEntry, null, map2.get(keyEntry), KeyAction.ADDED));
+                outMap.put(keyEntry, new ComparedEntry(null, map2.get(keyEntry), KeyAction.ADDED));
             } else if (!map2.containsKey(keyEntry)) {
-                this.listEntry.add(new ComparedEntry(keyEntry, map1.get(keyEntry), null, KeyAction.REMOVED));
+                outMap.put(keyEntry, new ComparedEntry(map1.get(keyEntry), null, KeyAction.REMOVED));
             } else if (isEquals(map1.get(keyEntry), map2.get(keyEntry))) {
-                this.listEntry.add(new ComparedEntry(
-                        keyEntry,
-                        map1.get(keyEntry),
-                        map1.get(keyEntry),
-                        KeyAction.NOTCHANGED));
+                outMap.put(keyEntry, new ComparedEntry(map1.get(keyEntry), map1.get(keyEntry), KeyAction.NOTCHANGED));
             } else {
-                this.listEntry.add(new ComparedEntry(
-                        keyEntry,
-                        map1.get(keyEntry),
-                        map2.get(keyEntry),
-                        KeyAction.CHANGED));
+                outMap.put(keyEntry, new ComparedEntry(map1.get(keyEntry), map2.get(keyEntry), KeyAction.CHANGED));
             }
         }
-        this.size = this.listEntry != null ? this.listEntry.size() : 0;
-    }
-
-    public final int getSize() {
-        return this.size;
+        return outMap;
     }
 
     private static boolean isEquals(Object entry1, Object entry2) {
@@ -45,9 +32,5 @@ public class DiffBuilder {
         } else {
             return (entry1 == null) && (entry2 == null);
         }
-    }
-
-    public final LinkedList<ComparedEntry> getList() {
-        return new LinkedList<>(listEntry);
     }
 }

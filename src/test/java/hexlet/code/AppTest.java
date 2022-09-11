@@ -28,10 +28,7 @@ class AppTest {
     void generateJsonToStylishTest() throws Exception {
         String resultPathByString = "src/test/resources/result12_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file1.json";
         String path2 = "src/test/resources/file2.json";
@@ -45,10 +42,7 @@ class AppTest {
     void generateJsonToRecursionStylishDefaultTest() throws Exception {
         String resultPathByString = "src/test/resources/result34_json_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file3.json";
         String path2 = "src/test/resources/file4.json";
@@ -62,10 +56,7 @@ class AppTest {
     void generateJsonToPlainTest() throws Exception {
         String resultPathByString = "src/test/resources/result34_json_plain.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file3.json";
         String path2 = "src/test/resources/file4.json";
@@ -79,10 +70,7 @@ class AppTest {
     void generateYmlToPlainTest() throws Exception {
         String resultPathByString = "src/test/resources/result12_yml_plain.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file1.yml";
         String path2 = "src/test/resources/file2.yml";
@@ -96,10 +84,7 @@ class AppTest {
     void generateYmlToStylishTest() throws Exception {
         String resultPathByString = "src/test/resources/result12_yml_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file1.yml";
         String path2 = "src/test/resources/file2.yml";
@@ -113,10 +98,7 @@ class AppTest {
     void generateYmlToStylishDefaultTest() throws Exception {
         String resultPathByString = "src/test/resources/result12_yml_stylish.txt";
         Path resultPath = Paths.get(resultPathByString).toAbsolutePath().normalize();
-        String extendedString = readString(resultPath);
-        while (extendedString.endsWith("\n")) {
-            extendedString = extendedString.substring(0, extendedString.length() - 1);
-        }
+        String extendedString = readString(resultPath).trim();
 
         String path1 = "src/test/resources/file1.yml";
         String path2 = "src/test/resources/file2.yml";

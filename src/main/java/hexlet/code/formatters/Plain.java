@@ -1,22 +1,23 @@
 package hexlet.code.formatters;
 
 import hexlet.code.ComparedEntry;
-import hexlet.code.DiffBuilder;
+
+import java.util.Map;
 
 public class Plain {
-    public static String getInPlain(DiffBuilder diffBuilder) {
+    public static String format(Map<String, ComparedEntry> diffBuilder) {
         StringBuilder resultString = new StringBuilder();
 
         boolean firstLine = true;
-        int size = diffBuilder.getSize();
-        for (ComparedEntry each : diffBuilder.getList()) {
-            switch (each.getAction()) {
+        int size = diffBuilder.size();
+        for (Map.Entry<String, ComparedEntry> each : diffBuilder.entrySet()) {
+            switch (each.getValue().getAction()) {
                 case ADDED -> resultString
                         .append(firstLine ? "" : "\n")
                         .append("Property '")
                         .append(each.getKey())
                         .append("' was added with value: ")
-                        .append(toPlainValue(each.getValue()));
+                        .append(toPlainValue(each.getValue().getValue()));
                 case REMOVED -> resultString
                         .append(firstLine ? "" : "\n")
                         .append("Property '")
@@ -27,13 +28,13 @@ public class Plain {
                         .append("Property '")
                         .append(each.getKey())
                         .append("' was updated. From ")
-                        .append(toPlainValue(each.getLastValue()))
+                        .append(toPlainValue(each.getValue().getLastValue()))
                         .append(" to ")
-                        .append(toPlainValue(each.getValue()));
+                        .append(toPlainValue(each.getValue().getValue()));
                 case NOTCHANGED -> {
                     continue;
                 }
-                default -> throw new IllegalStateException("Unexpected action: " + each.getAction());
+                default -> throw new IllegalStateException("Unexpected action: " + each.getValue().getAction());
             }
             firstLine = false;
         }

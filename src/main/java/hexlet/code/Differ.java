@@ -10,36 +10,24 @@ import static java.nio.file.Files.readString;
 public class Differ {
 
     public static String generate(String filePath1, String filePath2, String formatType) throws Exception {
-        Path fullPath1 = Paths.get(filePath1).toAbsolutePath().normalize();
-        String s1 = readString(fullPath1);
 
-        Map<String, Object> map1;
-        if (filePath1.endsWith(".json")) {
-            map1 = Parser.parseJsonString(s1);
-        } else if (filePath1.endsWith(".yml")) {
-            map1 = Parser.parseYmlString(s1);
-        } else {
-            throw new Exception("Wrong file1 format");
-        }
+        Map<String, Object> map1 = readFileToMap(filePath1);
+        Map<String, Object> map2 = readFileToMap(filePath2);
 
-        Path fullPath2 = Paths.get(filePath2).toAbsolutePath().normalize();
-        String s2 = readString(fullPath2);
-
-        Map<String, Object> map2;
-        if (filePath2.endsWith(".json")) {
-            map2 = Parser.parseJsonString(s2);
-        } else if (filePath2.endsWith(".yml")) {
-            map2 = Parser.parseYmlString(s2);
-        } else {
-            throw new Exception("Wrong file2 format");
-        }
-
-        DiffBuilder builtDiff = new DiffBuilder(map1, map2);
+        Map<String, ComparedEntry> builtDiff = DiffBuilder.getDiff(map1, map2);
 
         return formatter(builtDiff, formatType);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
         return generate(filePath1, filePath2, "stylish");
+    }
+
+    private static Map<String, Object> readFileToMap(String filePath) throws Exception {
+        Path fullPath = Paths.get(filePath).toAbsolutePath().normalize();
+        String str = readString(fullPath);
+
+        String extensionOfFile = filePath.substring(filePath.lastIndexOf(".") + 1);
+        return Parser.parseString(str, extensionOfFile);
     }
 }
