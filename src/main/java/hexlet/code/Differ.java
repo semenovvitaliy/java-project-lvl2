@@ -4,7 +4,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import static hexlet.code.Formatter.formatter;
 import static java.nio.file.Files.readString;
 
 public class Differ {
@@ -16,7 +15,7 @@ public class Differ {
 
         Map<String, ComparedEntry> builtDiff = DiffBuilder.getDiff(map1, map2);
 
-        return formatter(builtDiff, formatType);
+        return Formatter.formatter(builtDiff, formatType);
     }
 
     public static String generate(String filePath1, String filePath2) throws Exception {
